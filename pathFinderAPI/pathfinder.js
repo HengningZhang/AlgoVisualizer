@@ -27,7 +27,7 @@ Grid[8][8].State = "End"
 // }
 var StartPoint = [0,0]
 var EndPoint = [GRID_ROW_SIZE -1, GRID_COL_SIZE -1]
-var setterMode="wall"
+var setterMode="Wall"
 
 ////////////////// END OF THE DATA SEGMENT ///////////////////////////////////////
 
@@ -73,10 +73,16 @@ function clearGrid(){
         for (let j = 0; j < GRID_COL_SIZE; j++) {
             Grid[i][j].State = "NULL"
             Grid[i][j].VisitedAt = -1
+            var nodeName="node"+i+"x"+j
+            document.getElementById(nodeName).innerHTML="";
+    
         }
     }
     Grid[0][0].State = "Start"
     Grid[GRID_ROW_SIZE-1][GRID_COL_SIZE-1].State = "End"
+    document.getElementById("node"+0+"x"+0).innerHTML="<div class='startpoint'></div>";
+    document.getElementById("node"+(GRID_ROW_SIZE-1)+"x"+(GRID_ROW_SIZE-1)).innerHTML="<div class='endpoint'></div>";
+
 }
 
 /**
@@ -99,10 +105,10 @@ function clearGridSaveWall(){
 /**
  * the function that sets the start, will override walls but will not override end
  */
-function setStart(){
+function setStart(rownum,colnum){
     //TODO: Gather the row/col number from the user
-    var rownum = 0
-    var colnum = 0
+    // var rownum = 0
+    // var colnum = 0
     //TODO: preset here, need modification
     if(rownum < 0 || rownum >= GRID_ROW_SIZE || colnum < 0 || colnum >= GRID_COL_SIZE){
         console.log("Invalid number: data out of bound")
@@ -114,6 +120,8 @@ function setStart(){
     Grid[StartPoint[0]][StartPoint[1]].State = "NULL"
     Grid[rownum][colnum].State = "Start"
     StartPoint = [rownum,colnum]
+    var nodeName="node"+rownum+"x"+colnum
+    document.getElementById(nodeName).innerHTML="<div class='"+setterMode+"'></div>";
     return
 
 }
@@ -121,10 +129,10 @@ function setStart(){
 /**
  * the function that sets the end, will override walls but will not override end
  */
-function setEnd(){
+function setEnd(rownum,colnum){
     //TODO: Gather the row/col number from the user
-    var rownum = GRID_ROW_SIZE-1
-    var colnum = GRID_COL_SIZE-1
+    // var rownum = GRID_ROW_SIZE-1
+    // var colnum = GRID_COL_SIZE-1
     //TODO: preset here, need modification
     if(rownum < 0 || rownum >= GRID_ROW_SIZE || colnum < 0 || colnum >= GRID_COL_SIZE){
         console.log("Invalid number: data out of bound")
@@ -136,6 +144,8 @@ function setEnd(){
     Grid[EndPoint[0]][EndPoint[1]].State = "NULL"
     Grid[rownum][colnum].State = "End"
     EndPoint = [rownum,colnum]
+    var nodeName="node"+rownum+"x"+colnum
+    document.getElementById(nodeName).innerHTML="<div class='"+setterMode+"'></div>";
     return
 
 }
@@ -143,10 +153,10 @@ function setEnd(){
 /**
  * the function that sets the wall, will not override start/end
  */
-function setWall(){
+function setWall(rownum,colnum){
     //TODO: Gather the row/col number from the user
-    var rownum = 4
-    var colnum = 4
+    // var rownum = 4
+    // var colnum = 4
     //TODO: preset here, need modification
     if(rownum < 0 || rownum >= GRID_ROW_SIZE || colnum < 0 || colnum >= GRID_COL_SIZE){
         console.log("Invalid number: data out of bound")
@@ -160,6 +170,10 @@ function setWall(){
         return
     }
     Grid[rownum][colnum].State = "Wall"
+    var nodeName="node"+rownum+"x"+colnum
+    document.getElementById(nodeName).innerHTML="<div class='"+setterMode+"'></div>";
+    console.log("setWall")
+    // document.getElementById(nodeName).style.backgroundColor="black";
     return
 
 }
@@ -213,6 +227,8 @@ function BFS(){
                     if(Grid[i-1][j].VisitedAt == roundIndicator-1){
                         modifiedThisRound = true
                         Grid[i][j].VisitedAt = roundIndicator
+                        // document.getElementById("node"+i+"x"+j).innerHTML="<div id='explored"+i+"x"+j+"' class='explored'></div>";
+                        // document.getElementById("explored"+i+"x"+j).style.animationDelay=roundIndicator/5+"s"
                         if(i == EndPoint[0] && j == EndPoint[1]){
                             found = true
                             break;
@@ -223,6 +239,8 @@ function BFS(){
                     if(Grid[i+1][j].VisitedAt == roundIndicator-1){
                         modifiedThisRound = true
                         Grid[i][j].VisitedAt = roundIndicator
+                        // document.getElementById("node"+i+"x"+j).innerHTML="<div id='explored"+i+"x"+j+"' class='explored'></div>";
+                        // document.getElementById("explored"+i+"x"+j).style.animationDelay=roundIndicator/5+"s"
                         if(i == EndPoint[0] && j == EndPoint[1]){
                             found = true
                             break;
@@ -233,6 +251,8 @@ function BFS(){
                     if(Grid[i][j-1].VisitedAt == roundIndicator-1){
                         modifiedThisRound = true
                         Grid[i][j].VisitedAt = roundIndicator
+                        // document.getElementById("node"+i+"x"+j).innerHTML="<div id='explored"+i+"x"+j+"' class='explored'></div>";
+                        // document.getElementById("explored"+i+"x"+j).style.animationDelay=roundIndicator/5+"s"
                         if(i == EndPoint[0] && j == EndPoint[1]){
                             found = true
                             break;
@@ -243,6 +263,8 @@ function BFS(){
                     if(Grid[i][j+1].VisitedAt == roundIndicator-1){
                         modifiedThisRound = true
                         Grid[i][j].VisitedAt = roundIndicator
+                        // document.getElementById("node"+i+"x"+j).innerHTML="<div id='explored"+i+"x"+j+"' class='explored'></div>";
+                        // document.getElementById("explored"+i+"x"+j).style.animationDelay=roundIndicator/5+"s"
                         if(i == EndPoint[0] && j == EndPoint[1]){
                             found = true
                             break;
@@ -261,6 +283,7 @@ function BFS(){
 
     if(!found){
         console.log("End of search, not found")
+        alert("No possible route found")
         return
     }
     console.log("Found at round: " + roundIndicator)
@@ -281,6 +304,12 @@ function pathGatherer(){
     while( indicator != 0){
         console.log(indicator)
         console.log("Current: " + currentPoint[0] + "-" + currentPoint[1])
+        if(currentPoint[0]!=EndPoint[0] | currentPoint[1]!=EndPoint[1]){
+            console.log(currentPoint,"not equal to",EndPoint)
+            document.getElementById("node"+currentPoint[0]+"x"+currentPoint[1]).innerHTML="<div id='path"+currentPoint[0]+"x"+currentPoint[1]+"' class='path'></div>";
+            document.getElementById("path"+currentPoint[0]+"x"+currentPoint[1]).style.animationDelay=Grid[currentPoint[0]][currentPoint[1]].VisitedAt/15+"s"
+        }
+        
         Grid[currentPoint[0]][currentPoint[1]].State = "Path"
         //update, find the 
         indicator -= 1
@@ -320,9 +349,6 @@ function pathGatherer(){
             }
             
         }
-        
-        
-
 
     }
     //!! the path is the REVERSE PATH from the END to the START 
@@ -330,24 +356,40 @@ function pathGatherer(){
     console.log(path)
     consoleGridPrinter()
 }
-// select the algorithm to be performed
+
+/**
+ * select the algorithm to be performed
+ */
 function toggleAlgo(algoName){
     document.getElementById("algoIndicator").innerHTML=algoName;
     console.log(algoName)
 }
-
-// select setter mode
+/**
+ * select setter mode
+ */
 function toggleSetterMode(setterName){
     document.getElementById("setterModeIndicator").innerHTML="Set "+setterName
     setterMode=setterName
     console.log(setterName)
 }
 
+/**
+ * reads which algorithm to be performed and execute it
+ */
 function selectAlgo(){
-
+    var algoName=document.getElementById("algoIndicator").innerHTML
+    if(algoName=="Select Algorithm"){
+        alert("Please Select an Algorithm")
+        return
+    }
+    if(algoName=="BFS"){
+        BFS()
+    }
 }
 
-
+/**
+ * initialize the graph in html and add listeners to each of the nodes
+ */
 function initializeGraph(){
     console.log("initializing graph")
     var tempHTML=""
@@ -363,10 +405,14 @@ function initializeGraph(){
         for (let j = 0; j < GRID_COL_SIZE; j++) {
             document.getElementById("node"+i+"x"+j).addEventListener("click", setNode)
         }
-        tempHTML+="<br></br>"
     }
+    document.getElementById("node"+StartPoint[0]+"x"+StartPoint[1]).innerHTML="<div class='startpoint'></div>";
+    document.getElementById("node"+EndPoint[0]+"x"+EndPoint[1]).innerHTML="<div class='endpoint'></div>";
 }
 
+/**
+ * set the node to the state we want
+ */
 function setNode(event){
     let currentNode=event.currentTarget;
     
@@ -376,10 +422,16 @@ function setNode(event){
         return
     }
     else{
-        Grid[indexX][indexY].State=setterMode;
-        document.getElementById(currentNode.id).innerHTML="<"+setterMode+"></"+setterMode+">";
+        if(setterMode=="Wall"){
+            setWall(indexX,indexY)
+        }
+        else if(setterMode=="StartPoint"){
+            setStart(indexX,indexY)
+        }
+        else if(setterMode=="EndPoint"){
+            setEnd(indexX,indexY)
+        }
     }
-    //make call to setStuff
         
 }
 

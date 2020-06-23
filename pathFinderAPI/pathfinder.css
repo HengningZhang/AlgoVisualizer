@@ -83,40 +83,29 @@
 
 
 .graph{
+    margin-top: 100px;
     width:100%;
     height:70%;
     display:block;
 }
 .graph node{
     border:1px solid black;
-    border-radius:5px;
     width:50px;
     height:50px;
     display:inline-block;
     margin:none;
 }
 
-.br{
-    margin:0;
+br{
+    line-height:0%;
 }
-.graph wall{
-    border:1px solid black;
-    background-color: black;
-    border-radius:5px;
-    width:50px;
-    height:50px;
-    display:inline-block;
-    margin:none;
-}
-/* .wall{
-    animation-name: wallAnimation;
-    animation-duration: 0.3s;
-    animation-timing-function: ease-out;
-    animation-delay: 0;
-    animation-direction: alternate;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
+
+.wall{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(12, 53, 71);
+    position: absolute;
+    animation: wallAnimation 0.8s;
 }
   
 @keyframes wallAnimation {
@@ -133,5 +122,103 @@
     100% {
         transform: scale(1.0);
         background-color: rgb(12, 53, 71);
+    }
 }
-} */
+.startpoint{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(12, 255, 71);
+    position: absolute;
+    animation: startAnimation 0.8s;
+}
+  
+@keyframes startAnimation {
+    0% {
+        transform: scale(.3);
+        background-color: rgb(12, 255, 12);
+    }
+
+    50% {
+        transform: scale(1.2);
+        background-color: rgb(12, 255, 12);
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: rgb(12, 255, 12);
+    }
+}
+.endpoint{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(12, 53, 255);
+    position: absolute;
+    animation: endAnimation 0.8s;
+}
+  
+@keyframes endAnimation {
+    0% {
+        transform: scale(.3);
+        background-color: rgb(12, 53, 255);
+    }
+
+    50% {
+        transform: scale(1.2);
+        background-color: rgb(12, 53, 255);
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: rgb(12, 53, 255);
+    }
+}
+
+.path{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(255, 250, 0);
+    position: absolute;
+    animation: pathAnimation 0.3s;
+    animation-timing-function: linear;
+}
+  
+@keyframes pathAnimation {
+    0% {
+        transform: scale(0.6);
+        background-color: rgb(255, 250, 0);
+    }
+
+    50% {
+        transform: scale(0.8);
+        background-color: rgb(255, 250, 0);
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: rgb(255, 250, 0);
+    }
+}
+
+.explored{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(50, 200, 200);
+    position: absolute;
+    animation: exploredAnimation 0.6s;
+}
+  
+@keyframes exploredAnimation {
+    0% {
+        transform: scale(0.2);
+        background-color: rgb(25, 25, 25);
+    }
+    50% {
+        transform: scale(0.6);
+        background-color: rgb(50, 125, 125);
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: rgb(50, 200, 200);
+    }
+}
