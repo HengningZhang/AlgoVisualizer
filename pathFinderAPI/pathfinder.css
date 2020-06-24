@@ -176,10 +176,11 @@ br{
 .path{
     width: 50px;
     height: 50px;
-    background-color: rgb(255, 250, 0);
+    background-color: rgb(50, 125, 125);
     position: absolute;
     animation: pathAnimation 0.3s;
     animation-timing-function: linear;
+    animation-fill-mode: forwards;
 }
   
 @keyframes pathAnimation {
@@ -202,15 +203,17 @@ br{
 .explored{
     width: 50px;
     height: 50px;
-    background-color: rgb(50, 200, 200);
+    background-color: rgb(255, 255, 255);
     position: absolute;
     animation: exploredAnimation 0.6s;
+    animation-fill-mode: forwards;
 }
   
 @keyframes exploredAnimation {
     0% {
         transform: scale(0.2);
-        background-color: rgb(25, 25, 25);
+        /* background-color: rgb(25, 25, 25); */
+        background-color: rgb(225, 225, 225);
     }
     50% {
         transform: scale(0.6);
@@ -221,4 +224,5 @@ br{
         transform: scale(1.0);
         background-color: rgb(50, 200, 200);
     }
+
 }
