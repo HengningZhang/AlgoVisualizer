@@ -1,0 +1,228 @@
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    width:100%;
+}
+
+.navbar name{
+    float:left;
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight:700;
+    color:black;
+    text-align: center;
+    padding:11px 16px;
+    background-color:#ffa31a ;
+}
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: #ffa31a;
+    color:black;
+    cursor:pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+    cursor:pointer;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.legends{
+    width:100%;
+    display:flex;
+}
+
+
+.graph{
+    margin-top: 100px;
+    width:100%;
+    height:70%;
+    display:block;
+}
+.graph node{
+    border:1px solid black;
+    width:50px;
+    height:50px;
+    display:inline-block;
+    margin:none;
+}
+
+br{
+    line-height:0%;
+}
+
+.wall{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(12, 53, 71);
+    position: absolute;
+    animation: wallAnimation 0.8s;
+}
+  
+@keyframes wallAnimation {
+    0% {
+        transform: scale(.3);
+        background-color: rgb(12, 53, 71);
+    }
+
+    50% {
+        transform: scale(1.2);
+        background-color: rgb(12, 53, 71);
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: rgb(12, 53, 71);
+    }
+}
+.startpoint{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(12, 255, 71);
+    position: absolute;
+    animation: startAnimation 0.8s;
+}
+  
+@keyframes startAnimation {
+    0% {
+        transform: scale(.3);
+        background-color: rgb(12, 255, 12);
+    }
+
+    50% {
+        transform: scale(1.2);
+        background-color: rgb(12, 255, 12);
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: rgb(12, 255, 12);
+    }
+}
+.endpoint{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(12, 53, 255);
+    position: absolute;
+    animation: endAnimation 0.8s;
+}
+  
+@keyframes endAnimation {
+    0% {
+        transform: scale(.3);
+        background-color: rgb(12, 53, 255);
+    }
+
+    50% {
+        transform: scale(1.2);
+        background-color: rgb(12, 53, 255);
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: rgb(12, 53, 255);
+    }
+}
+
+.path{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(50, 125, 125);
+    position: absolute;
+    animation: pathAnimation 0.3s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+  
+@keyframes pathAnimation {
+    0% {
+        transform: scale(0.6);
+        background-color: rgb(255, 250, 0);
+    }
+
+    50% {
+        transform: scale(0.8);
+        background-color: rgb(255, 250, 0);
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: rgb(255, 250, 0);
+    }
+}
+
+.explored{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    animation: exploredAnimation 0.6s;
+    animation-fill-mode: forwards;
+}
+  
+@keyframes exploredAnimation {
+    0% {
+        transform: scale(0.2);
+        /* background-color: rgb(25, 25, 25); */
+        background-color: rgb(225, 225, 225);
+    }
+    50% {
+        transform: scale(0.6);
+        background-color: rgb(50, 125, 125);
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: rgb(50, 200, 200);
+    }
+
+}

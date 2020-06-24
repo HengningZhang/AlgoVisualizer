@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Path Finder</title>
+    <script src="pathfinder.js"></script>
+    <link rel="stylesheet" type="text/css" href="pathfinder.css">
+</head>
+<body onload="initializeGraph()">
+    <div class="navbar">
+        <name>Path Finder</name>
+        <div class="dropdown">
+            <button id="algoIndicator" class="dropbtn">Select Algorithm</button>
+            <div class="dropdown-content">
+                <a onclick="toggleAlgo('BFS')" href="#">BFS</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
+        </div> 
+        <div class="dropdown">
+            <button id="setterModeIndicator" class="dropbtn">Set Wall</button>
+            <div class="dropdown-content">
+                <a onclick="toggleSetterMode('Wall')" href="#">Set Wall</a>
+                <a onclick="toggleSetterMode('StartPoint')" href="#">Set StartPoint</a>
+                <a onclick="toggleSetterMode('EndPoint')" href="#">Set EndPoint</a>
+            </div>
+        </div> 
+        <a id="clearButton" onclick="clearGrid()">ClearGrid</a>
+        <a onclick="selectAlgo()">initiate pathFinder</a>
+        <a id="consoleGridPrinter" onclick="consoleGridPrinter()">consoleGridPrinter</a>
+        <a id="conssoleVisitPrinter" onclick="consoleVisitPrinter()">consoleVisitPrinter</a>
+    </div>
+    <div class="legends">
+        
+    </div>
+
+    <div id="graphWrapper" class="graph">
+    </div>
+</body>
+</html>
