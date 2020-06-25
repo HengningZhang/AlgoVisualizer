@@ -1,6 +1,6 @@
 
 [ongoing]
 
-summer project by Hengning Zhang and Kejie He
+the first project in summer project series by Hengning Zhang and Kejie He
 
-includes a webpage project "algorithms visualizer" and an app "Letsgo"
+This is the webpage project "algorithms visualizer".
