@@ -499,7 +499,7 @@ function Dijkstra(event){
     var found = false
     var queue = []
     var visitedSet = new Set()
-    visitedSet.add([[StartPoint[0],StartPoint[1]]])
+    visitedSet.add(Grid[StartPoint[0]][StartPoint[1]].id)
     
     queue.push([StartPoint[0],StartPoint[1]])
 
@@ -512,46 +512,46 @@ function Dijkstra(event){
         while(queue.length !=0){
             thisPoint = queue.pop()
             // console.log(thisPoint[0]+"-"+thisPoint[1])
-            thisRow = thisPoint[0]
-            thisCol = thisPoint[1]
+            var thisRow = thisPoint[0]
+            var thisCol = thisPoint[1]
 
             console.log("At"+thisRow+"-"+thisCol)
-            console.log(Grid[thisRow][thisCol].id)
+            
 
             //upper neighbour
             if(thisRow > 0){
-                if(!visitedSet.has([thisRow-1,thisCol])){
+                if(!visitedSet.has(Grid[thisRow-1][thisCol].id)){
                     newQueue.push([thisRow-1,thisCol])
                     modifiedThisRound = true;
                     Grid[thisRow-1][thisCol].VisitedAt = roundIndicator  
-                    visitedSet.add([thisRow-1,thisCol])                  
+                    visitedSet.add(Grid[thisRow-1][thisCol].id)                  
                 }
             }
             //lower neighbour
             if(thisRow < GRID_ROW_SIZE - 1){
-                if(!visitedSet.has([thisRow+1,thisCol])){
+                if(!visitedSet.has(Grid[thisRow+1][thisCol].id)){
                     newQueue.push([thisRow+1,thisCol])
                     modifiedThisRound = true;
                     Grid[thisRow+1][thisCol].VisitedAt = roundIndicator
-                    VisitedAt.add([thisRow+1,thisCol])                    
+                    visitedSet.add(Grid[thisRow+1][thisCol].id)                  
                 }
             }
             //left neighbour
             if(thisCol > 0){
-                if(!visitedSet.has([thisRow,thisCol-1])){
+                if(!visitedSet.has(Grid[thisRow][thisCol-1].id)){
                     newQueue.push([thisRow,thisCol-1])
                     modifiedThisRound = true;
                     Grid[thisRow][thisCol-1].VisitedAt = roundIndicator   
-                    VisitedAt.add([thisRow,thisCol-1])                 
+                    visitedSet.add(Grid[thisRow][thisCol-1].id)                 
                 }
             }
              //right neighbour
              if(thisCol < GRID_COL_SIZE -1){
-                if(!visitedSet.has([thisRow,thisCol+1])){
+                if(!visitedSet.has(Grid[thisRow][thisCol+1].id)){
                     newQueue.push([thisRow,thisCol+1])
                     modifiedThisRound = true;
                     Grid[thisRow][thisCol+1].VisitedAt = roundIndicator  
-                    VisitedAt.add([thisRow,thisCol+1])                  
+                    visitedSet.add(Grid[thisRow][thisCol+1].id)               
                 }
             }
             visitedSet.add([thisRow,thisCol])
@@ -564,7 +564,7 @@ function Dijkstra(event){
 
     }
 
-    consoleGridPrinter()
+    consoleVisitPrinter()
 
 
 }
