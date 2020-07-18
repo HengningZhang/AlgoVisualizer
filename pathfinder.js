@@ -486,6 +486,35 @@ function setNode(event){
         
 }
 
+class PriorityQueue {
+    constructor() {
+      this.collection = [];
+    }
+    enqueue(element){
+      if (this.isEmpty()){ 
+        this.collection.push(element);
+      } else {
+        let added = false;
+        for (let i = 1; i <= this.collection.length; i++){
+          if (element[1] < this.collection[i-1][1]){ 
+            this.collection.splice(i-1, 0, element);
+            added = true;
+            break;
+          }
+        }
+        if (!added){
+            this.collection.push(element);
+        }
+      }
+    };
+    dequeue() {
+      let value = this.collection.shift();
+      return value;
+    };
+    isEmpty() {
+      return (this.collection.length == 0) 
+    };
+}
 
 
 function Dijkstra(event){
@@ -495,76 +524,93 @@ function Dijkstra(event){
     Grid[StartPoint[0]][StartPoint[1]].VisitedAt = 0;
     var modifiedThisRound = true
     //the variable that indicates the current round for finding
-    var roundIndicator = 0
     var found = false
-    var queue = []
+    var queue = new PriorityQueue()
     var visitedSet = new Set()
-    visitedSet.add(Grid[StartPoint[0]][StartPoint[1]].id)
+    // visitedSet.add(Grid[StartPoint[0]][StartPoint[1]].id)
     
-    queue.push([StartPoint[0],StartPoint[1]])
+    queue.enqueue([[StartPoint[0],StartPoint[1]],0])
+    
+        
+    // find all the neighbour point inside the list      
+    while(!queue.isEmpty()){
+        thisPoint = queue.dequeue()
+        // console.log(thisPoint[0]+"-"+thisPoint[1])
+        var thisRow = thisPoint[0][0]
+        var thisCol = thisPoint[0][1]
+        var thisCost = thisPoint[1]
 
-    while(!found && modifiedThisRound){
-        //reset the indicator
-        modifiedThisRound = false
-        roundIndicator ++ 
-        newQueue = []
-        // find all the neighbour point inside the list        
-        while(queue.length !=0){
-            thisPoint = queue.pop()
-            // console.log(thisPoint[0]+"-"+thisPoint[1])
-            var thisRow = thisPoint[0]
-            var thisCol = thisPoint[1]
+        console.log("At"+thisRow+"-"+thisCol+"with "+thisCost)
+        console.log(!visitedSet.has([0,0]))
 
-            console.log("At"+thisRow+"-"+thisCol)
-            
-
-            //upper neighbour
+        if(!visitedSet.has(Grid[thisRow][thisCol].id)){
+            Grid[thisRow][thisCol].VisitedAt = thisCost  
+            if (!(thisRow==StartPoint[0] && thisCol==StartPoint[1]) && !(thisRow==EndPoint[0] && thisCol==EndPoint[1])){
+                document.getElementById(Grid[thisRow][thisCol].id).innerHTML = "<div id='explored"+thisRow+"x"+thisCol+"' class='explored'></div>"
+                document.getElementById("explored"+thisRow+"x"+thisCol).style.animationDelay=thisCost/5+"s"
+            }
+                
+             //upper neighbour
             if(thisRow > 0){
-                if(!visitedSet.has(Grid[thisRow-1][thisCol].id) && Grid[thisRow-1][thisCol].State != "Wall" ){
-                    newQueue.push([thisRow-1,thisCol])
-                    modifiedThisRound = true;
-                    Grid[thisRow-1][thisCol].VisitedAt = roundIndicator  
-                    visitedSet.add(Grid[thisRow-1][thisCol].id)                  
+                if(!visitedSet.has([thisRow-1,thisCol]) && Grid[thisRow-1][thisCol].State != "Wall" ){
+                    queue.enqueue([[thisRow-1,thisCol],thisCost+1])
+    
                 }
             }
             //lower neighbour
             if(thisRow < GRID_ROW_SIZE - 1){
-                if(!visitedSet.has(Grid[thisRow+1][thisCol].id) && Grid[thisRow+1][thisCol].State != "Wall"){
-                    newQueue.push([thisRow+1,thisCol])
-                    modifiedThisRound = true;
-                    Grid[thisRow+1][thisCol].VisitedAt = roundIndicator
-                    visitedSet.add(Grid[thisRow+1][thisCol].id)                  
+                if(!visitedSet.has([thisRow+1,thisCol]) && Grid[thisRow+1][thisCol].State != "Wall"){
+                    queue.enqueue([[thisRow+1,thisCol],thisCost+1])
+                                                
                 }
             }
             //left neighbour
             if(thisCol > 0){
-                if(!visitedSet.has(Grid[thisRow][thisCol-1].id) &&Grid[thisRow][thisCol-1].State!= "Wall"){
-                    newQueue.push([thisRow,thisCol-1])
-                    modifiedThisRound = true;
-                    Grid[thisRow][thisCol-1].VisitedAt = roundIndicator   
-                    visitedSet.add(Grid[thisRow][thisCol-1].id)                 
+                if(!visitedSet.has([thisRow,thisCol-1]) &&Grid[thisRow][thisCol-1].State!= "Wall"){
+                    queue.enqueue([[thisRow,thisCol-1],thisCost+1])
+                    
+                                                    
                 }
             }
-             //right neighbour
-             if(thisCol < GRID_COL_SIZE -1){
-                if(!visitedSet.has(Grid[thisRow][thisCol+1].id) && Grid[thisRow][thisCol+1].State != "Wall"){
-                    newQueue.push([thisRow,thisCol+1])
-                    modifiedThisRound = true;
-                    Grid[thisRow][thisCol+1].VisitedAt = roundIndicator  
-                    visitedSet.add(Grid[thisRow][thisCol+1].id)               
+            //right neighbour
+            if(thisCol < GRID_COL_SIZE -1){
+                if(!visitedSet.has([thisRow,thisCol+1]) && Grid[thisRow][thisCol+1].State != "Wall"){
+                    queue.enqueue([[thisRow,thisCol+1],thisCost+1])
+                    
+                                                
                 }
             }
-            visitedSet.add([thisRow,thisCol])
+            visitedSet.add(Grid[thisRow][thisCol].id)  
         }
-        queue = newQueue
-        if(visitedSet.has([EndPoint[0],EndPoint[1]])){
-            found = true
-            break
-        }
+        
 
+       
     }
-    consoleVisitPrinter()
+    // queue = newQueue
+    if(visitedSet.has(Grid[EndPoint[0]][EndPoint[1]].id)){
+        found = true
+    }
 
+    
+    consoleVisitPrinter()
+    if(!found){
+        console.log("End of search, not found")
+        alert("No possible route found")
+        return
+    }
+    console.log("Found at round: " + Grid[EndPoint[0]][EndPoint[1]].VisitedAt)
+
+
+    var counter = 0
+    var myInterval = setInterval(() => {
+        if(counter < 1000*Grid[EndPoint[0]][EndPoint[1]].VisitedAt/5){
+            counter+= 100
+        }
+        else{
+            pathGatherer()
+            clearInterval(myInterval)
+        }
+    }, 100);
 
 }
 
