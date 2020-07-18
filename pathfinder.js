@@ -520,7 +520,7 @@ function Dijkstra(event){
 
             //upper neighbour
             if(thisRow > 0){
-                if(!visitedSet.has(Grid[thisRow-1][thisCol].id)){
+                if(!visitedSet.has(Grid[thisRow-1][thisCol].id) && Grid[thisRow-1][thisCol].State != "Wall" ){
                     newQueue.push([thisRow-1,thisCol])
                     modifiedThisRound = true;
                     Grid[thisRow-1][thisCol].VisitedAt = roundIndicator  
@@ -529,7 +529,7 @@ function Dijkstra(event){
             }
             //lower neighbour
             if(thisRow < GRID_ROW_SIZE - 1){
-                if(!visitedSet.has(Grid[thisRow+1][thisCol].id)){
+                if(!visitedSet.has(Grid[thisRow+1][thisCol].id) && Grid[thisRow+1][thisCol].State != "Wall"){
                     newQueue.push([thisRow+1,thisCol])
                     modifiedThisRound = true;
                     Grid[thisRow+1][thisCol].VisitedAt = roundIndicator
@@ -538,7 +538,7 @@ function Dijkstra(event){
             }
             //left neighbour
             if(thisCol > 0){
-                if(!visitedSet.has(Grid[thisRow][thisCol-1].id)){
+                if(!visitedSet.has(Grid[thisRow][thisCol-1].id) &&Grid[thisRow][thisCol-1].State!= "Wall"){
                     newQueue.push([thisRow,thisCol-1])
                     modifiedThisRound = true;
                     Grid[thisRow][thisCol-1].VisitedAt = roundIndicator   
@@ -547,7 +547,7 @@ function Dijkstra(event){
             }
              //right neighbour
              if(thisCol < GRID_COL_SIZE -1){
-                if(!visitedSet.has(Grid[thisRow][thisCol+1].id)){
+                if(!visitedSet.has(Grid[thisRow][thisCol+1].id) && Grid[thisRow][thisCol+1].State != "Wall"){
                     newQueue.push([thisRow,thisCol+1])
                     modifiedThisRound = true;
                     Grid[thisRow][thisCol+1].VisitedAt = roundIndicator  
@@ -563,7 +563,6 @@ function Dijkstra(event){
         }
 
     }
-
     consoleVisitPrinter()
 
 
