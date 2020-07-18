@@ -420,6 +420,9 @@ function selectAlgo(){
     if(algoName=="BFS"){
         BFS()
     }
+    if(algoName == "Dijkstra"){
+        Dijkstra()
+    }
 }
 
 /**
@@ -483,5 +486,79 @@ function setNode(event){
         
 }
 
-// setWall()
-// BFS()
+
+
+function Dijkstra(event){
+    clearGridSaveWall()
+    resetVisit()
+    clearGridSaveWall()
+    resetVisit()
+    //setting the startpoint to 0 to initiate the BFS
+    Grid[StartPoint[0]][StartPoint[1]].VisitedAt = 0;
+    var modifiedThisRound = true
+    //the variable that indicates the current round for finding
+    var roundIndicator = 0
+    var found = false
+    var queue = []
+    var visitedSet = new Set()
+
+    queue.push(Grid[StartPoint[0][StartPoint[1]]])
+
+
+    while(!found && modifiedThisRound){
+        //reset the indicator
+        modifiedThisRound = false
+        roundIndicator ++ 
+        newQueue = []
+        // find all the neighbour point inside the list        
+        while(queue.length !=0){
+            thisPoint = queue.pop()
+            console.log(thisPoint)
+            thisRow = thisPoint.row
+            thisCol = thisPoint.col
+            //upper neighbour
+            if(thisRow > 0){
+                if(!visitedSet.has(Grid[thisRow-1][thisCol])){
+                    newQueue.push(Grid[thisRow-1][thisCol])
+                    modifiedThisRound = true;
+                    Grid[thisRow-1][thisCol] = roundIndicator                    
+                }
+            }
+            //lower neighbour
+            if(thisRow < GRID_ROW_SIZE - 1){
+                if(!visitedSet.has(Grid[thisRow+1][thisCol])){
+                    newQueue.push(Grid[thisRow+1][thisCol])
+                    modifiedThisRound = true;
+                    Grid[thisRow+1][thisCol] = roundIndicator                    
+                }
+            }
+            //left neighbour
+            if(thisCol > 0){
+                if(!visitedSet.has(Grid[thisRow][thisCol-1])){
+                    newQueue.push(Grid[thisRow][thisCol-1])
+                    modifiedThisRound = true;
+                    Grid[thisRow][thisCol-1] = roundIndicator                    
+                }
+            }
+             //right neighbour
+             if(thisCol < GRID_COL_SIZE -1){
+                if(!visitedSet.has(Grid[thisRow][thisCol+1])){
+                    newQueue.push(Grid[thisRow][thisCol+1])
+                    modifiedThisRound = true;
+                    Grid[thisRow][thisCol+1] = roundIndicator                    
+                }
+            }
+            visitedSet.add(Grid[thisRow][thisCol])
+        }
+        queue = newQueue
+        if(visitedSet.has(Grid[endpoint[0]][endpoint[1]])){
+            break
+        }
+
+    }
+
+    consoleGridPrinter()
+
+
+}
+
