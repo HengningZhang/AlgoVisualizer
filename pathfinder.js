@@ -491,8 +491,6 @@ function setNode(event){
 function Dijkstra(event){
     clearGridSaveWall()
     resetVisit()
-    clearGridSaveWall()
-    resetVisit()
     //setting the startpoint to 0 to initiate the BFS
     Grid[StartPoint[0]][StartPoint[1]].VisitedAt = 0;
     var modifiedThisRound = true
@@ -501,9 +499,9 @@ function Dijkstra(event){
     var found = false
     var queue = []
     var visitedSet = new Set()
-
-    queue.push(Grid[StartPoint[0][StartPoint[1]]])
-
+    visitedSet.add([[StartPoint[0],StartPoint[1]]])
+    
+    queue.push([StartPoint[0],StartPoint[1]])
 
     while(!found && modifiedThisRound){
         //reset the indicator
@@ -513,45 +511,54 @@ function Dijkstra(event){
         // find all the neighbour point inside the list        
         while(queue.length !=0){
             thisPoint = queue.pop()
-            console.log(thisPoint)
-            thisRow = thisPoint.row
-            thisCol = thisPoint.col
+            // console.log(thisPoint[0]+"-"+thisPoint[1])
+            thisRow = thisPoint[0]
+            thisCol = thisPoint[1]
+
+            console.log("At"+thisRow+"-"+thisCol)
+            console.log(Grid[thisRow][thisCol].id)
+
             //upper neighbour
             if(thisRow > 0){
-                if(!visitedSet.has(Grid[thisRow-1][thisCol])){
-                    newQueue.push(Grid[thisRow-1][thisCol])
+                if(!visitedSet.has([thisRow-1,thisCol])){
+                    newQueue.push([thisRow-1,thisCol])
                     modifiedThisRound = true;
-                    Grid[thisRow-1][thisCol] = roundIndicator                    
+                    Grid[thisRow-1][thisCol].VisitedAt = roundIndicator  
+                    visitedSet.add([thisRow-1,thisCol])                  
                 }
             }
             //lower neighbour
             if(thisRow < GRID_ROW_SIZE - 1){
-                if(!visitedSet.has(Grid[thisRow+1][thisCol])){
-                    newQueue.push(Grid[thisRow+1][thisCol])
+                if(!visitedSet.has([thisRow+1,thisCol])){
+                    newQueue.push([thisRow+1,thisCol])
                     modifiedThisRound = true;
-                    Grid[thisRow+1][thisCol] = roundIndicator                    
+                    Grid[thisRow+1][thisCol].VisitedAt = roundIndicator
+                    VisitedAt.add([thisRow+1,thisCol])                    
                 }
             }
             //left neighbour
             if(thisCol > 0){
-                if(!visitedSet.has(Grid[thisRow][thisCol-1])){
-                    newQueue.push(Grid[thisRow][thisCol-1])
+                if(!visitedSet.has([thisRow,thisCol-1])){
+                    newQueue.push([thisRow,thisCol-1])
                     modifiedThisRound = true;
-                    Grid[thisRow][thisCol-1] = roundIndicator                    
+                    Grid[thisRow][thisCol-1].VisitedAt = roundIndicator   
+                    VisitedAt.add([thisRow,thisCol-1])                 
                 }
             }
              //right neighbour
              if(thisCol < GRID_COL_SIZE -1){
-                if(!visitedSet.has(Grid[thisRow][thisCol+1])){
-                    newQueue.push(Grid[thisRow][thisCol+1])
+                if(!visitedSet.has([thisRow,thisCol+1])){
+                    newQueue.push([thisRow,thisCol+1])
                     modifiedThisRound = true;
-                    Grid[thisRow][thisCol+1] = roundIndicator                    
+                    Grid[thisRow][thisCol+1].VisitedAt = roundIndicator  
+                    VisitedAt.add([thisRow,thisCol+1])                  
                 }
             }
-            visitedSet.add(Grid[thisRow][thisCol])
+            visitedSet.add([thisRow,thisCol])
         }
         queue = newQueue
-        if(visitedSet.has(Grid[endpoint[0]][endpoint[1]])){
+        if(visitedSet.has([EndPoint[0],EndPoint[1]])){
+            found = true
             break
         }
 
