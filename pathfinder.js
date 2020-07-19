@@ -423,6 +423,9 @@ function selectAlgo(){
     if(algoName == "Dijkstra"){
         Dijkstra()
     }
+    if(algoName == "NumberOfIslands"){
+        FindIslands()
+    }
 }
 
 /**
@@ -611,6 +614,58 @@ function Dijkstra(event){
             clearInterval(myInterval)
         }
     }, 100);
+
+}
+
+
+// this function use a sequential search with heuristic bfs visiting mechanism on islands
+// when VisitedAt is set to 0 means its already visited (default value -1)
+function FindIslands(event){
+    clearGridSaveWall()
+    resetVisit()
+    var islandNum = 0
+
+    for(var i = 0; i < GRID_ROW_SIZE; i++){
+        for(var j = 0; j < GRID_COL_SIZE; j++){
+            
+            // already visited, continue
+            if(Grid[i][j].VisitedAt != -1){
+                continue
+            }
+            // not part of an island, continue;
+            if(Grid[i][j].State != "Wall"){
+                continue
+            }
+            // unvisited island found, explore and count
+            else{
+                islandNum ++
+                IslandExplorer(i,j)
+            }
+
+        }
+    }
+    
+    console.log(islandNum);
+}
+
+// recursive function, explore all neighbour island parts (Walls)
+function IslandExplorer(Current_x, Current_y){
+    // out of bound, return
+    if(Current_x < 0 || Current_y < 0 || Current_x >= GRID_ROW_SIZE || Current_y >= GRID_COL_SIZE){
+        return
+    }
+    // explored or not part of an Island, return
+    if(Grid[Current_x][Current_y].VisitedAt != -1 || Grid[Current_x][Current_y].State != "Wall"){
+        return
+    }
+    // Set visit and explore all 4 neighbours
+    Grid[Current_x][Current_y].VisitedAt = 0;
+    IslandExplorer(Current_x-1,Current_y)
+    IslandExplorer(Current_x+1,Current_y)
+    IslandExplorer(Current_x,Current_y-1)
+    IslandExplorer(Current_x,Current_y+1)
+    return
+
 
 }
 
